@@ -51,12 +51,9 @@ func Duplicate[V any](s []V) []V {
 }
 
 // Shift returns the first value of a, removes it from a and updates a.
-func Shift[V any](a []V) V {
+func Shift[V any](a *[]V) V {
 	var x V
-	p := &a
-	// p := Duplicate(a)
-	x, *p = (a)[0], (a)[1:]
-	&a = p
+	x, *a = (*a)[0], (*a)[1:]
 	return x
 }
 
@@ -84,13 +81,6 @@ func Filter(slice *Slice, keep func(v any) bool) []any {
 // 		}
 // 	}
 // 	return a[:n]
-// }
-
-// Shift returns the first value of a, removes it from a and updates a.
-// func Shift[V any](a *[]V) V {
-// 	var x V
-// 	x, *a = (*a)[0], (*a)[1:]
-// 	return x
 // }
 
 // Unshift appends x in front of a and updates a.

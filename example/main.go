@@ -21,12 +21,15 @@ func main() {
 	gg := slice.Duplicate(g.Elements)
 	fmt.Println(gg...)
 	fmt.Println("tee")
-	t := []string{"2", "tre"}
-	tee := slice.Shift(t)
+	t := []int64{2, 3}
+	tee := slice.Shift(&t)
 	fmt.Println(tee)
+	fmt.Println(t)
+	slice.Unshift(&t, 5)
+	slice.Unshift(&t, 5)
 	fmt.Println(t)
 	tt := slice.Duplicate(t)
 	for _, ttt := range tt {
-		fmt.Println(ttt)
+		fmt.Println(ttt, len(t))
 	}
 }
