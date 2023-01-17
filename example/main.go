@@ -20,8 +20,11 @@ func main() {
 	fmt.Println(g.Elements...)
 	gg := slice.Duplicate(g.Elements)
 	fmt.Println(gg...)
-
-	t := []string{"2"}
+	fmt.Println("tee")
+	t := []string{"2", "tre"}
+	tee := slice.Shift(t)
+	fmt.Println(tee)
+	fmt.Println(t)
 	tt := slice.Duplicate(t)
 	for _, ttt := range tt {
 		fmt.Println(ttt)

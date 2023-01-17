@@ -50,6 +50,16 @@ func Duplicate[V any](s []V) []V {
 	return append(s[:0:0], s...)
 }
 
+// Shift returns the first value of a, removes it from a and updates a.
+func Shift[V any](a []V) V {
+	var x V
+	p := &a
+	// p := Duplicate(a)
+	x, *p = (a)[0], (a)[1:]
+	&a = p
+	return x
+}
+
 // Filter returns a slice with only the elements of a that meet
 // the requrirements of the keep function.
 func Filter(slice *Slice, keep func(v any) bool) []any {
@@ -77,11 +87,11 @@ func Filter(slice *Slice, keep func(v any) bool) []any {
 // }
 
 // Shift returns the first value of a, removes it from a and updates a.
-func Shift[V any](a *[]V) V {
-	var x V
-	x, *a = (*a)[0], (*a)[1:]
-	return x
-}
+// func Shift[V any](a *[]V) V {
+// 	var x V
+// 	x, *a = (*a)[0], (*a)[1:]
+// 	return x
+// }
 
 // Unshift appends x in front of a and updates a.
 func Unshift[V any](a *[]V, x V) {
@@ -103,9 +113,9 @@ func Pop[V any](a *[]V) V {
 
 // PopFront is and alias of the Shift function.
 // Shift returns the first value of a removes it from a and updates a.
-func PopFront[V any](a *[]V) V {
-	return Shift(a)
-}
+// func PopFront[V any](a *[]V) V {
+// 	return Shift(a)
+// }
 
 // Insert inserts x in the i position of a and updates a.
 func Insert(g *Slice, i int, e ...any) {
