@@ -18,4 +18,12 @@ func main() {
 	g.Remove(0)
 	slice.Insert(g, 1, 10)
 	fmt.Println(g.Elements...)
+	gg := slice.Duplicate(g.Elements)
+	fmt.Println(gg...)
+
+	t := []string{"2"}
+	tt := slice.Duplicate(t)
+	for _, ttt := range tt {
+		fmt.Println(ttt)
+	}
 }

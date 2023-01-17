@@ -38,20 +38,16 @@ func Remove(slice []any, n ...int) []any {
 	return s
 }
 
-// Remove removes the elements in n from s and updates s.
+// Remove modifies s removing all indexed elements in n.
 func (s *Slice) Remove(n ...int) {
-	sort.Ints(n)
 	s.Lock()
 	defer s.Unlock()
-	for _, i := range n {
-		if i <= len(s.Elements)-1 {
-			s.Elements = append(s.Elements[:i], s.Elements[i+1:]...)
-		}
-	}
+	s.Elements = Remove(s.Elements, n...)
 }
 
-func Copy[V any](a []V) []V {
-	return append(a[:0:0], a...)
+// Duplicate returns a slice with the same elements of s.
+func Duplicate[V any](s []V) []V {
+	return append(s[:0:0], s...)
 }
 
 // Filter returns a slice with only the elements of a that meet
