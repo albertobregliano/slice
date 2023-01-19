@@ -41,4 +41,6 @@ func main() {
 	fmt.Println("g")
 	g.Filter(func(x any) bool { return x.(int)%2 == 0 })
 	fmt.Println(g.Elements...)
+	g.Scramble()
+	fmt.Println(g.Elements...)
 }

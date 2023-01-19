@@ -35,24 +35,18 @@ func Shift[V any](a *[]V) V {
 	return x
 }
 
-// Filter returns a slice with only the elements that meet
-// the requrirements of the keep function.
+// Filter keeps in s.Elements only the elements that satisfy the keep function.
 func (s *Slice) Filter(keep func(v any) bool) {
 	s.Lock()
 	defer s.Unlock()
 	s.Elements = Filter(s.Elements, keep)
 }
 
-// Filter returns a slice with only the elements of a that meet
-// the requrirements of the keep function.
-func Filter[V any](a []V, keep func(V) bool) []V {
-	var out []V
-	for _, x := range a {
-		if keep(x) {
-			out = append(out, x)
-		}
-	}
-	return out
+// Scramble modify the order of s.Elements randomly.
+func (s *Slice) Scramble() {
+	s.Lock()
+	defer s.Unlock()
+	s.Elements = Scramble(s.Elements)
 }
 
 // Unshift appends x in front of a and updates a.
