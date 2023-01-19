@@ -1,7 +1,6 @@
 package slice
 
 import (
-	"sort"
 	"sync"
 )
 
@@ -15,27 +14,6 @@ func New(elements []any) *Slice {
 	return &Slice{
 		Elements: elements,
 	}
-}
-
-// Remove returns a copy of slice with its elements indexed in n removed.
-func Remove(slice []any, n ...int) []any {
-	s := make([]any, len(slice))
-	copy(s, slice)
-	filter := make(map[int]struct{}, len(n))
-	for _, e := range n {
-		filter[e] = struct{}{}
-	}
-	var nn []int
-	for e := range filter {
-		nn = append(nn, e)
-	}
-	sort.Ints(nn)
-	for index, i := range nn {
-		if len(slice) > index {
-			s = append(s[:i-index], s[i+1-index:]...)
-		}
-	}
-	return s
 }
 
 // Remove modifies s removing all indexed elements in n.
@@ -57,31 +35,25 @@ func Shift[V any](a *[]V) V {
 	return x
 }
 
-// Filter returns a slice with only the elements of a that meet
+// Filter returns a slice with only the elements that meet
 // the requrirements of the keep function.
-func Filter(slice *Slice, keep func(v any) bool) []any {
-	n := 0
-	for _, x := range slice.Elements {
-		if keep(x) {
-			slice.Elements[n] = x
-			n++
-		}
-	}
-	return slice.Elements[:n]
+func (s *Slice) Filter(keep func(v any) bool) {
+	s.Lock()
+	defer s.Unlock()
+	s.Elements = Filter(s.Elements, keep)
 }
 
 // Filter returns a slice with only the elements of a that meet
 // the requrirements of the keep function.
-// func Filter[V any](a []V, keep func(V) bool) []V {
-// 	n := 0
-// 	for _, x := range a {
-// 		if keep(x) {
-// 			a[n] = x
-// 			n++
-// 		}
-// 	}
-// 	return a[:n]
-// }
+func Filter[V any](a []V, keep func(V) bool) []V {
+	var out []V
+	for _, x := range a {
+		if keep(x) {
+			out = append(out, x)
+		}
+	}
+	return out
+}
 
 // Unshift appends x in front of a and updates a.
 func Unshift[V any](a *[]V, x V) {
@@ -107,21 +79,19 @@ func Pop[V any](a *[]V) V {
 // 	return Shift(a)
 // }
 
-// Insert inserts x in the i position of a and updates a.
-func Insert(g *Slice, i int, e ...any) {
-	g.Lock()
-	defer g.Unlock()
-	if i <= len(g.Elements)-1 {
-		g.Elements = append(g.Elements[:i], append(e, g.Elements[i:]...)...)
+// Insert adds e elements to s starting at i position of s.
+func (s *Slice) Insert(i int, e ...any) {
+	s.Lock()
+	defer s.Unlock()
+	if i < len(s.Elements) {
+		s.Elements = append(s.Elements[:i], append(e, s.Elements[i:]...)...)
 	}
 }
 
-// Insert inserts x in the i position of a and updates a.
-// func Insert[V any](a *[]V, i int, x any) {
-// 	switch v := x.(type) {
-// 	case V:
-// 		*a = append((*a)[:i], append([]V{v}, (*a)[i:]...)...)
-// 	case []V:
-// 		*a = append((*a)[:i], append(v, (*a)[i:]...)...)
-// 	}
-// }
+// Insert returns the elements of s and e inserted in the i position of s.
+func Insert[V any](s []V, i int, e ...V) []V {
+	if i < len(s) {
+		s = append(s[:i], append(e, s[i:]...)...)
+	}
+	return s
+}
