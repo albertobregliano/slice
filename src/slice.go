@@ -16,7 +16,7 @@ func New(elements []any) *Slice {
 	}
 }
 
-// Remove modifies s removing all indexed elements in n.
+// Remove removes all indexed elements in n from s.
 func (s *Slice) Remove(n ...int) {
 	s.Lock()
 	defer s.Unlock()
@@ -28,7 +28,7 @@ func Duplicate[V any](s []V) []V {
 	return append(s[:0:0], s...)
 }
 
-// Shift returns the first value of a, removes it from a and updates a.
+// Shift returns the first element of a, removes it from a and updates a.
 func Shift[V any](a *[]V) V {
 	var x V
 	x, *a = (*a)[0], (*a)[1:]
@@ -73,7 +73,7 @@ func Pop[V any](a *[]V) V {
 // 	return Shift(a)
 // }
 
-// Insert adds e elements to s starting at i position of s.
+// Insert adds e elements to s starting from i position.
 func (s *Slice) Insert(i int, e ...any) {
 	s.Lock()
 	defer s.Unlock()

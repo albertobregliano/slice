@@ -2,7 +2,7 @@ package slice
 
 import "sort"
 
-// Remove returns a copy of slice with its elements indexed in n removed.
+// Remove returns all slice elements but those whose index is in n.
 func Remove(slice []any, n ...int) []any {
 	s := make([]any, len(slice))
 	copy(s, slice)
