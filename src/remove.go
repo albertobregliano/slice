@@ -1,11 +1,22 @@
 package slice
 
-import "sort"
+import (
+	"sort"
+)
 
-// Remove returns all slice elements but those whose index is in n.
-func Remove(slice []any, n ...int) []any {
-	s := make([]any, len(slice))
+// Remove returns all slice elements but those whose index is in indexes.
+func Remove[V any](slice []V, indexes ...int) []V {
+	s := make([]V, len(slice))
 	copy(s, slice)
+	for i, index := range toRemove(indexes) {
+		if i < len(s) {
+			s = append(s[:index-i], s[index+1-i:]...)
+		}
+	}
+	return s
+}
+
+func toRemove(n []int) []int {
 	filter := make(map[int]struct{}, len(n))
 	for _, e := range n {
 		filter[e] = struct{}{}
@@ -15,10 +26,5 @@ func Remove(slice []any, n ...int) []any {
 		nn = append(nn, e)
 	}
 	sort.Ints(nn)
-	for index, i := range nn {
-		if index < len(s) {
-			s = append(s[:i-index], s[i+1-index:]...)
-		}
-	}
-	return s
+	return nn
 }

@@ -81,11 +81,3 @@ func (s *Slice) Insert(i int, e ...any) {
 		s.Elements = append(s.Elements[:i], append(e, s.Elements[i:]...)...)
 	}
 }
-
-// Insert returns the elements of s and e inserted in the i position of s.
-func Insert[V any](s []V, i int, e ...V) []V {
-	if i < len(s) {
-		s = append(s[:i], append(e, s[i:]...)...)
-	}
-	return s
-}
