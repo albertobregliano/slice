@@ -6,6 +6,22 @@ import (
 	slice "github.com/albertobregliano/slice/src"
 )
 
+func ExampleDuplicate_int() {
+	intSlice := []int{0, 1, 2, 3, 4}
+	s := slice.Duplicate(intSlice)
+	fmt.Println(s)
+	// Output:
+	// [0 1 2 3 4]
+}
+
+func ExampleDuplicate_string() {
+	strSlice := []string{"zero", "one", "two", "three", "four"}
+	s := slice.Duplicate(strSlice)
+	fmt.Println(s)
+	// Output:
+	// [zero one two three four]
+}
+
 func ExampleFilter_int() {
 	intSlice := []int{0, 1, 2, 3, 4}
 	s := slice.Filter(intSlice, func(x int) bool { return x < 3 })
@@ -14,7 +30,7 @@ func ExampleFilter_int() {
 	// [0 1 2]
 }
 
-func ExampleFilter_str() {
+func ExampleFilter_string() {
 	strSlice := []string{"zero", "one", "two", "three", "four"}
 	s := slice.Filter(strSlice,
 		func(x string) bool { return []rune(x)[0] == 't' })
@@ -30,7 +46,7 @@ func ExampleRemove_int() {
 	// [1 3]
 }
 
-func ExampleRemove_str() {
+func ExampleRemove_string() {
 	s := slice.Remove([]string{"0", "1", "2", "3"}, 1, 3)
 	fmt.Println(s)
 	// Output:
@@ -44,7 +60,7 @@ func ExampleReverse_int() {
 	// [4 3 2 1 0]
 }
 
-func ExampleReverse_str() {
+func ExampleReverse_string() {
 	strSlice := []string{"zero", "one", "two", "three", "four"}
 	s := slice.Reverse(strSlice)
 	fmt.Println(s)
@@ -52,7 +68,7 @@ func ExampleReverse_str() {
 	// [four three two one zero]
 }
 
-func ExampleInsert_str() {
+func ExampleInsert_string() {
 	strSlice := []string{"zero", "one", "two", "three", "four"}
 	s := slice.Insert(strSlice, 2, "two2", "three3")
 	fmt.Println(s)
@@ -75,10 +91,56 @@ func ExampleScramble_int() {
 	// [1 3 0 4 2]
 }
 
-func ExampleScramble_str() {
+func ExampleScramble_string() {
 	strSlice := []string{"zero", "one", "two", "three", "four"}
 	s := slice.Scramble(strSlice, 1000)
 	fmt.Println(s)
 	// Output:
 	// [one three zero four two]
+}
+
+func ExampleShift_int() {
+	intSlice := []int{0, 1, 2, 3, 4}
+	x := slice.Shift(&intSlice)
+	fmt.Println(x)
+	fmt.Println(intSlice)
+	// Output:
+	// 0
+	// [1 2 3 4]
+}
+
+func ExampleUnshift_int() {
+	intSlice := []int{0, 1, 2, 3, 4}
+	slice.Unshift(&intSlice, -1)
+	fmt.Println(intSlice)
+	// Output:
+	// [-1 0 1 2 3 4]
+}
+
+func ExamplePushFront_int() {
+	intSlice := []int{0, 1, 2, 3, 4}
+	slice.PushFront(&intSlice, -1)
+	fmt.Println(intSlice)
+	// Output:
+	// [-1 0 1 2 3 4]
+}
+
+func ExamplePop_int() {
+	intSlice := []int{0, 1, 2, 3, 4}
+	x := slice.Pop(&intSlice)
+	fmt.Println(x)
+	fmt.Println(intSlice)
+	// Output:
+	// 4
+	// [0 1 2 3]
+}
+
+func ExamplePopFront_string() {
+	strSlice := []string{"zero", "one", "two", "three", "four"}
+	x := slice.PopFront(&strSlice)
+	fmt.Println(x)
+	fmt.Println(strSlice)
+	// Output:
+	// zero
+	// [one two three four]
 }
