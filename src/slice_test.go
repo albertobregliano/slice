@@ -62,3 +62,17 @@ func ExampleInsert_int() {
 	// Output:
 	// [0 1 22 33 2 3 4]
 }
+
+func ExampleScramble_int() {
+	s := slice.Scramble([]int{0, 1, 2, 3, 4}, 1000)
+	fmt.Println(s)
+	// Output:
+	// [1 3 0 4 2]
+}
+
+func ExampleScramble_str() {
+	s := slice.Scramble([]string{"zero", "one", "two", "three", "four"}, 1000)
+	fmt.Println(s)
+	// Output:
+	// [one three zero four two]
+}

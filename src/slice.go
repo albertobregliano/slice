@@ -16,11 +16,11 @@ func New(elements []any) *Slice {
 	}
 }
 
-// Remove removes all indexed elements in n from s.
-func (s *Slice) Remove(n ...int) {
+// Remove removes from s all elements whose indexes are in toBeRemoved.
+func (s *Slice) Remove(toBeRemoved ...int) {
 	s.Lock()
 	defer s.Unlock()
-	s.Elements = Remove(s.Elements, n...)
+	s.Elements = Remove(s.Elements, toBeRemoved...)
 }
 
 // Duplicate returns a slice with the same elements of s.
@@ -28,10 +28,10 @@ func Duplicate[V any](s []V) []V {
 	return append(s[:0:0], s...)
 }
 
-// Shift returns the first element of a, removes it from a and updates a.
-func Shift[V any](a *[]V) V {
+// Shift returns the first element of s, removes it from s and updates s.
+func Shift[V any](s *[]V) V {
 	var x V
-	x, *a = (*a)[0], (*a)[1:]
+	x, *s = (*s)[0], (*s)[1:]
 	return x
 }
 
@@ -43,35 +43,36 @@ func (s *Slice) Filter(keep func(v any) bool) {
 }
 
 // Scramble modify the order of s.Elements randomly.
-func (s *Slice) Scramble() {
+// A seed can be used for deterministic outputs.
+func (s *Slice) Scramble(seed ...int64) {
 	s.Lock()
 	defer s.Unlock()
-	s.Elements = Scramble(s.Elements)
+	s.Elements = Scramble(s.Elements, seed...)
 }
 
 // Unshift appends x in front of a and updates a.
-func Unshift[V any](a *[]V, x V) {
-	*a = append([]V{x}, *a...)
+func Unshift[V any](s *[]V, x V) {
+	*s = append([]V{x}, *s...)
 }
 
 // PushFront is an alias of Unshift function.
 // Unshift appends x in front of a and updates a.
-func PushFront[V any](a *[]V, x V) {
-	Unshift(a, x)
+func PushFront[V any](s *[]V, x V) {
+	Unshift(s, x)
 }
 
 // Pop returns the last element of a removing it from aand updates a.
-func Pop[V any](a *[]V) V {
+func Pop[V any](s *[]V) V {
 	var x V
-	x, *a = (*a)[len(*a)-1], (*a)[:len(*a)-1]
+	x, *s = (*s)[len(*s)-1], (*s)[:len(*s)-1]
 	return x
 }
 
 // PopFront is and alias of the Shift function.
 // Shift returns the first value of a removes it from a and updates a.
-// func PopFront[V any](a *[]V) V {
-// 	return Shift(a)
-// }
+func PopFront[V any](s *[]V) V {
+	return Shift(s)
+}
 
 // Insert adds e elements to s starting from i position.
 func (s *Slice) Insert(i int, e ...any) {
