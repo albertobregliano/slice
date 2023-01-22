@@ -94,11 +94,7 @@ func Unshift[V any](s *[]V, x V) {
 	*s = append([]V{x}, *s...)
 }
 
-// PushFront is an alias of Unshift function.
-// Unshift appends x in front of s and updates s.
-func PushFront[V any](s *[]V, x V) {
-	Unshift(s, x)
-}
+/* Alias functions */
 
 // Pop returns the last element of s, removes it from s and updates s.
 func Pop[V any](s *[]V) V {
@@ -111,4 +107,10 @@ func Pop[V any](s *[]V) V {
 // Shift returns the first value of s removes it from s and updates s.
 func PopFront[V any](s *[]V) V {
 	return Shift(s)
+}
+
+// PushFront is an alias of Unshift function.
+// Unshift appends x in front of s and updates s.
+func PushFront[V any](s *[]V, x V) {
+	Unshift(s, x)
 }
