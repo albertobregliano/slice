@@ -2,7 +2,6 @@ package slice_test
 
 import (
 	"fmt"
-	"strings"
 
 	slice "github.com/albertobregliano/slice/v1"
 )
@@ -183,14 +182,6 @@ func ExampleApply_int() {
 	fmt.Println(out)
 	// Output:
 	// [1 2 1 2 2 1]
-}
-
-func ExampleApply_string() {
-	strSlice := []string{"zero", "one"}
-	out := slice.Apply(strSlice, func(x string) string { return strings.Title(x) })
-	fmt.Println(out)
-	// Output:
-	// [Zero One]
 }
 
 func ExampleOdd_int() {

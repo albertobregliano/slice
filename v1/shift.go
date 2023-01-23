@@ -1,4 +1,4 @@
-package main
+package slice
 
 // Shift returns the first element of s, removes it from s and updates s.
 func Shift[V any](s *[]V) V {
