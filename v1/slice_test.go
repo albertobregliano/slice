@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	slice "github.com/albertobregliano/slice/src"
+	slice "github.com/albertobregliano/slice/v1"
 )
 
 func ExampleDuplicate_int() {
