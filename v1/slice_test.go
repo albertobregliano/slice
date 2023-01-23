@@ -2,6 +2,7 @@ package slice_test
 
 import (
 	"fmt"
+	"strings"
 
 	slice "github.com/albertobregliano/slice/src"
 )
@@ -51,6 +52,13 @@ func ExampleRemove_string() {
 	fmt.Println(s)
 	// Output:
 	// [0 2]
+}
+
+func ExampleRemove_bool() {
+	s := slice.Remove([]bool{true, false, true}, 1)
+	fmt.Println(s)
+	// Output:
+	// [true true]
 }
 
 func ExampleReverse_int() {
@@ -143,4 +151,68 @@ func ExamplePopFront_string() {
 	// Output:
 	// zero
 	// [one two three four]
+}
+
+func ExampleContains_int() {
+	intSlice := []int{0, 1, 2, 3, 4}
+	b := slice.Contains(intSlice, 5)
+	fmt.Println(b)
+	// Output:
+	// false
+}
+
+func ExampleContains_string() {
+	strSlice := []string{"zero", "one", "two", "three", "four"}
+	b := slice.Contains(strSlice, "zero")
+	fmt.Println(b)
+	// Output:
+	// true
+}
+
+func ExampleDeduplicate_int() {
+	intSlice := []int{0, 1, 0, 1, 1, 0}
+	out := slice.Deduplicate(intSlice)
+	fmt.Println(out)
+	// Output:
+	// [0 1]
+}
+
+func ExampleApply_int() {
+	intSlice := []int{0, 1, 0, 1, 1, 0}
+	out := slice.Apply(intSlice, func(x int) int { return x + 1 })
+	fmt.Println(out)
+	// Output:
+	// [1 2 1 2 2 1]
+}
+
+func ExampleApply_string() {
+	strSlice := []string{"zero", "one"}
+	out := slice.Apply(strSlice, func(x string) string { return strings.Title(x) })
+	fmt.Println(out)
+	// Output:
+	// [Zero One]
+}
+
+func ExampleOdd_int() {
+	intSlice := []int{1, 2, 3, 4, 5}
+	out := slice.Odd(intSlice)
+	fmt.Println(out)
+	// Output:
+	// [1 3 5]
+}
+
+func ExampleEven_int() {
+	intSlice := []int{1, 2, 3, 4, 5}
+	out := slice.Even(intSlice)
+	fmt.Println(out)
+	// Output:
+	// [2 4]
+}
+
+func ExamplePercentage_int() {
+	intSlice := []int{1, 2, 3, 4, 5}
+	out := slice.Percentage(intSlice, 60, 1001)
+	fmt.Println(out)
+	// Output:
+	// [4 2 5]
 }
