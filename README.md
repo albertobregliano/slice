@@ -3,9 +3,16 @@
 
 
 ## Available functions:
+    Apply
+    Contains
+    Deduplicate
     Duplicate
+    Even
     Filter
     Insert
+    Odd
+    Percentage
+    Pop
     Remove
     Reverse
     Scramble
